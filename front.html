@@ -2,7 +2,6 @@
 <html>
 <link rel="stylesheet" href="style.css"/>
 <link href="script.js"/>
-<link href="Tokens.js"/>
  
     <head>
       <meta charset="UTF-8">
@@ -14,6 +13,77 @@
       <link href="codemirror-5.48.0/theme/base16-dark.css" rel="stylesheet"/>
       <script src="codemirror-5.48.0/mode/python/python.js"></script>
       <script src="codemirror-5.48.0/mode/javascript/javascript.js"></script>
+     
+     <script>
+  function tokenizar(){
+
+    'use strict';
+const Lex = require('lexical-parser')
+let input = document.getElementById("editor2")
+let tokenMatchers = [
+    'if',
+    'break',
+    'or',
+    'def',
+    'del',
+    'else', 
+    'elif',
+    'not', 
+    'continue',
+    'in',
+    'try',
+    'exec', 
+    'print', 
+    'raise', 
+    'lambda',
+    'class',
+    'import',
+    'yield',
+    'assert',
+    'except',
+    'for', 
+    '+',
+    '-',
+    '*',
+    '**',
+    '%', 
+    '/',
+    '//',
+    '{',
+    '}',
+    '(',
+    ')',
+    '<',
+    '>',
+    '=',
+    '&&',
+    'int',
+    ['integer', /[0-9]+/],
+    ['id', /[a-zA-Z][a-zA-Z0-9]*/],
+    ['string', /\".*?\"/]
+]
+let ignorePattern = '[\n\s \t]+'
+let lex = new Lex(input, tokenMatchers, ignorePattern)
+let token = undefined
+try {
+    do {
+        token = lex.nextToken()
+        console.log(token)
+    } while (token)
+} catch (err) {
+    
+    if (err.code === "LEXICAL_ERROR") {
+        console.log(`\n${err.message}\n`)
+        console.log(`Position: ${err.position}`)
+        console.log(`Character: ${err.character}`)
+        console.log(`Nearby code: ${err.nearbyCode}`)
+    }
+    else
+        console.log(err)
+}
+                
+            }
+        </script>
     </head>
     
     <div class="caja">
@@ -30,7 +100,7 @@
     </script>
   </div> 
    
-    <a herf="#"  class="button">Traducir</a>
+    <input class="button" value="Traducir" onClick="tokenizar"/>
      
     <div class="caja1">
         <H1> Script </H1>
